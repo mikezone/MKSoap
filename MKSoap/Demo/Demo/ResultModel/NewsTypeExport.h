@@ -10,7 +10,7 @@
 
 @interface NewsTypeExport : NSObject
 
-@property (nonatomic, assign) NSInteger newsTypeId;
+@property (nonatomic, assign) unsigned long long newsTypeId;
 @property (nonatomic, copy) NSString *newsTypeName;
 
 @end

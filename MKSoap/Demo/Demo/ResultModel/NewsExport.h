@@ -30,7 +30,7 @@
 @property (nonatomic, strong) PersonExport *creater;
 @property (nonatomic, strong) NewsTypeExport *newsType;
 @property (nonatomic, strong) TextHtmlExport *flowContent_html;
-@property (nonatomic, assign) NSInteger newsId;
+@property (nonatomic, assign) unsigned long long newsId;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, assign) NSInteger clickNum;
 @property (nonatomic, copy) NSString *linkURL;

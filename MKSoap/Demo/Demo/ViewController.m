@@ -66,14 +66,14 @@
         for (NewsExport *newsExport in array) {
             NSLog(@"%@", newsExport.createTime);
             NSLog(@"%@", newsExport.creater);
-            NSLog(@"%zd", newsExport.creater.personId);
+            NSLog(@"%llu", newsExport.creater.personId);
             NSLog(@"%@", newsExport.creater.name);
             NSLog(@"%@", newsExport.newsType);
-            NSLog(@"%zd", newsExport.newsType.newsTypeId);
+            NSLog(@"%llu", newsExport.newsType.newsTypeId);
             NSLog(@"%@", newsExport.newsType.newsTypeName);
             NSLog(@"%@", newsExport.flowContent_html);
             NSLog(@"%@", newsExport.flowContent_html.context);
-            NSLog(@"%zd", newsExport.newsId);
+            NSLog(@"%llu", newsExport.newsId);
             NSLog(@"%@", newsExport.title);
             NSLog(@"%zd", newsExport.clickNum);
             NSLog(@"%@", newsExport.linkURL);

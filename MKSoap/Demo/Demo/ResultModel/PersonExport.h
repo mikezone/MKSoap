@@ -10,7 +10,7 @@
 
 @interface PersonExport : NSObject
 
-@property (nonatomic, assign) NSInteger personId;
+@property (nonatomic, assign) unsigned long long personId;
 @property (nonatomic, copy) NSString *name;
 
 @end
