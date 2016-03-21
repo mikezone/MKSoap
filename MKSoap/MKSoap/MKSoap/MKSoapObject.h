@@ -26,6 +26,4 @@
 - (instancetype)addParameterWithKey:(NSString *)key value:(id)value;
 - (instancetype)addParameterWithKeys:(NSArray *)keys values:(NSArray *)values;
 
-//- (void)setMappingClass:(Class)aClass;
-
 @end

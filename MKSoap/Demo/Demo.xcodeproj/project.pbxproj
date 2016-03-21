@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270B39ED1C9F9F38005C8573 /* NewsExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39EC1C9F9F38005C8573 /* NewsExport.m */; };
+		270B39F01C9FA03E005C8573 /* PersonExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39EF1C9FA03E005C8573 /* PersonExport.m */; };
+		270B39F31C9FA048005C8573 /* NewsTypeExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39F21C9FA048005C8573 /* NewsTypeExport.m */; };
+		270B39F61C9FA051005C8573 /* TextHtmlExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39F51C9FA051005C8573 /* TextHtmlExport.m */; };
+		270B39FD1C9FBE45005C8573 /* NSObject+GDataXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39FC1C9FBE45005C8573 /* NSObject+GDataXML.m */; };
+		270B3A451C9FDC76005C8573 /* NSString+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B3A441C9FDC76005C8573 /* NSString+Convert.m */; };
 		275E1D471C9E946500AA4DFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E1D461C9E946500AA4DFE /* main.m */; };
 		275E1D4A1C9E946500AA4DFE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E1D491C9E946500AA4DFE /* AppDelegate.m */; };
 		275E1D521C9E946500AA4DFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 275E1D511C9E946500AA4DFE /* Assets.xcassets */; };
@@ -49,6 +55,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		270B39EB1C9F9F38005C8573 /* NewsExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsExport.h; sourceTree = "<group>"; };
+		270B39EC1C9F9F38005C8573 /* NewsExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsExport.m; sourceTree = "<group>"; };
+		270B39EE1C9FA03E005C8573 /* PersonExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonExport.h; sourceTree = "<group>"; };
+		270B39EF1C9FA03E005C8573 /* PersonExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonExport.m; sourceTree = "<group>"; };
+		270B39F11C9FA048005C8573 /* NewsTypeExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTypeExport.h; sourceTree = "<group>"; };
+		270B39F21C9FA048005C8573 /* NewsTypeExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTypeExport.m; sourceTree = "<group>"; };
+		270B39F41C9FA051005C8573 /* TextHtmlExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextHtmlExport.h; sourceTree = "<group>"; };
+		270B39F51C9FA051005C8573 /* TextHtmlExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextHtmlExport.m; sourceTree = "<group>"; };
+		270B39F81C9FA2CF005C8573 /* MKSoapKeyMappingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSoapKeyMappingProtocol.h; sourceTree = "<group>"; };
+		270B39FB1C9FBE45005C8573 /* NSObject+GDataXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+GDataXML.h"; sourceTree = "<group>"; };
+		270B39FC1C9FBE45005C8573 /* NSObject+GDataXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+GDataXML.m"; sourceTree = "<group>"; };
+		270B3A431C9FDC76005C8573 /* NSString+Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Convert.h"; sourceTree = "<group>"; };
+		270B3A441C9FDC76005C8573 /* NSString+Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Convert.m"; sourceTree = "<group>"; };
 		275E1D421C9E946500AA4DFE /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		275E1D461C9E946500AA4DFE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		275E1D481C9E946500AA4DFE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,8 +111,8 @@
 		275E1E2F1C9E9A7000AA4DFE /* MKXmlSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKXmlSerializer.m; sourceTree = "<group>"; };
 		275E1E301C9E9A7000AA4DFE /* MKSoap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSoap.h; sourceTree = "<group>"; };
 		275E1E391C9E9B6A00AA4DFE /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
-		275E1E3B1C9E9BD000AA4DFE /* AuthResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthResult.h; sourceTree = "<group>"; };
-		275E1E3C1C9E9BD000AA4DFE /* AuthResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthResult.m; sourceTree = "<group>"; };
+		275E1E3B1C9E9BD000AA4DFE /* AuthResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthResult.h; path = ../AuthResult.h; sourceTree = "<group>"; };
+		275E1E3C1C9E9BD000AA4DFE /* AuthResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthResult.m; path = ../AuthResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +141,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		270B39EA1C9F9F0D005C8573 /* ResultModel */ = {
+			isa = PBXGroup;
+			children = (
+				275E1E3B1C9E9BD000AA4DFE /* AuthResult.h */,
+				275E1E3C1C9E9BD000AA4DFE /* AuthResult.m */,
+				270B39EB1C9F9F38005C8573 /* NewsExport.h */,
+				270B39EC1C9F9F38005C8573 /* NewsExport.m */,
+				270B39EE1C9FA03E005C8573 /* PersonExport.h */,
+				270B39EF1C9FA03E005C8573 /* PersonExport.m */,
+				270B39F11C9FA048005C8573 /* NewsTypeExport.h */,
+				270B39F21C9FA048005C8573 /* NewsTypeExport.m */,
+				270B39F41C9FA051005C8573 /* TextHtmlExport.h */,
+				270B39F51C9FA051005C8573 /* TextHtmlExport.m */,
+			);
+			path = ResultModel;
+			sourceTree = "<group>";
+		};
+		270B39F71C9FA234005C8573 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				270B39F81C9FA2CF005C8573 /* MKSoapKeyMappingProtocol.h */,
+				270B3A431C9FDC76005C8573 /* NSString+Convert.h */,
+				270B3A441C9FDC76005C8573 /* NSString+Convert.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		275E1D391C9E946500AA4DFE = {
 			isa = PBXGroup;
 			children = (
@@ -147,14 +193,14 @@
 		275E1D441C9E946500AA4DFE /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				270B39F71C9FA234005C8573 /* Category */,
+				270B39EA1C9F9F0D005C8573 /* ResultModel */,
 				275E1D9D1C9E957E00AA4DFE /* GDataXMLNode */,
 				275E1D891C9E956300AA4DFE /* AFNetworking */,
 				275E1D481C9E946500AA4DFE /* AppDelegate.h */,
 				275E1D491C9E946500AA4DFE /* AppDelegate.m */,
 				275E1D4B1C9E946500AA4DFE /* ViewController.h */,
 				275E1DA31C9E95BF00AA4DFE /* ViewController.m */,
-				275E1E3B1C9E9BD000AA4DFE /* AuthResult.h */,
-				275E1E3C1C9E9BD000AA4DFE /* AuthResult.m */,
 				275E1DA11C9E95A400AA4DFE /* Main.storyboard */,
 				275E1D511C9E946500AA4DFE /* Assets.xcassets */,
 				275E1D531C9E946500AA4DFE /* LaunchScreen.storyboard */,
@@ -233,6 +279,8 @@
 				275E1E2E1C9E9A7000AA4DFE /* MKXmlSerializer.h */,
 				275E1E2F1C9E9A7000AA4DFE /* MKXmlSerializer.m */,
 				275E1E301C9E9A7000AA4DFE /* MKSoap.h */,
+				270B39FB1C9FBE45005C8573 /* NSObject+GDataXML.h */,
+				270B39FC1C9FBE45005C8573 /* NSObject+GDataXML.m */,
 			);
 			name = MKSoap;
 			path = ../MKSoap/MKSoap;
@@ -368,20 +416,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				270B3A451C9FDC76005C8573 /* NSString+Convert.m in Sources */,
 				275E1D9C1C9E956300AA4DFE /* AFURLSessionManager.m in Sources */,
 				275E1D4A1C9E946500AA4DFE /* AppDelegate.m in Sources */,
 				275E1D981C9E956300AA4DFE /* AFNetworkReachabilityManager.m in Sources */,
+				270B39F61C9FA051005C8573 /* TextHtmlExport.m in Sources */,
 				275E1E351C9E9A7000AA4DFE /* MKSoapSerializationEnvelope.m in Sources */,
 				275E1E361C9E9A7000AA4DFE /* MKSoapTransportManager.m in Sources */,
 				275E1D471C9E946500AA4DFE /* main.m in Sources */,
+				270B39F31C9FA048005C8573 /* NewsTypeExport.m in Sources */,
+				270B39F01C9FA03E005C8573 /* PersonExport.m in Sources */,
 				275E1DA41C9E95BF00AA4DFE /* ViewController.m in Sources */,
 				275E1D991C9E956300AA4DFE /* AFSecurityPolicy.m in Sources */,
 				275E1E3D1C9E9BD000AA4DFE /* AuthResult.m in Sources */,
 				275E1D9A1C9E956300AA4DFE /* AFURLRequestSerialization.m in Sources */,
+				270B39ED1C9F9F38005C8573 /* NewsExport.m in Sources */,
 				275E1DA01C9E957E00AA4DFE /* GDataXMLNode.m in Sources */,
 				275E1E331C9E9A7000AA4DFE /* MKSoapEnvelope.m in Sources */,
 				275E1E371C9E9A7000AA4DFE /* MKXmlSerializer.m in Sources */,
 				275E1D9B1C9E956300AA4DFE /* AFURLResponseSerialization.m in Sources */,
+				270B39FD1C9FBE45005C8573 /* NSObject+GDataXML.m in Sources */,
 				275E1D971C9E956300AA4DFE /* AFHTTPSessionManager.m in Sources */,
 				275E1E341C9E9A7000AA4DFE /* MKSoapObject.m in Sources */,
 			);

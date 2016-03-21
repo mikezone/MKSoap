@@ -108,7 +108,7 @@ NSString *const XSI1999 = @"http://www.w3.org/1999/XMLSchema-instance";
 - (void)writeBodyToSerializer:(MKXmlSerializer *)xmlSerializer {
     // 将bodyOut 也就是SoapObject转为xml字符串
     MKSoapObject *soapObject = (MKSoapObject *)self.bodyOut;
-    [xmlSerializer appendString:[NSString stringWithFormat:@"<n0:%@ xmlns:n0=\"http://impl.services.v3x.seeyon.com\">", soapObject.methodName]];
+    [xmlSerializer appendString:[NSString stringWithFormat:@"<n0:%@ xmlns:n0=\"%@\">", soapObject.methodName, soapObject.nameSpace]];
     for (NSUInteger i = 0; i < soapObject.parameterCount; i++) {
         NSString *paraValue = [soapObject parameterValueAtIndex:i];
         NSString *paraKey = [soapObject parameterKeyAtIndex:i];

@@ -15,6 +15,7 @@
 #import "MKSoapSerializationEnvelope.h"
 #import "MKSoapTransportManager.h"
 #import "MKXmlSerializer.h"
+#import "NSObject+GDataXML.h"
 
 #endif
 
