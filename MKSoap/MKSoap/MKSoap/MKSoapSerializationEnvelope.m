@@ -97,12 +97,7 @@ static NSSet *_baseDataType;
     
     // 这里开始将returnValuePart这个GDataXMLElement类型转为model
 //    NSLog(@"%@", self.returnValuePart);
-    MKSoapObject *soapObject = self.bodyOut;
-    Class clazz = soapObject.mappingClass;
-    
-    if (!clazz || [clazz isSubclassOfClass:[NSDictionary class]]) {
-        clazz = [NSMutableDictionary class];
-    }
+    Class clazz = [self getMappingClass];
     
     NSArray *childrens = self.returnValuePart.children;
     if (childrens.count > 1) {
@@ -120,9 +115,18 @@ static NSSet *_baseDataType;
     }
 }
 
-- (void)setValuesWithGDataElement:(GDataXMLElement *)element forObject:(id)obj {
+- (Class)getMappingClass {
     MKSoapObject *soapObject = self.bodyOut;
     Class clazz = soapObject.mappingClass;
+//    NSLog(@"%@", NSStringFromClass(clazz));
+    if (!clazz || [clazz isSubclassOfClass:[NSDictionary class]]) {
+        clazz = [NSMutableDictionary class];
+    }
+    return clazz;
+}
+
+- (void)setValuesWithGDataElement:(GDataXMLElement *)element forObject:(id)obj {
+    Class clazz = [self getMappingClass];
     // 思路一：先将xml转为字典或者数组 再转为模型
     
     // 思路二：直接在解析xml的过程中 转为模型
