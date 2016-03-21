@@ -34,8 +34,8 @@
     
     MKSoapObject *soapObject = [MKSoapObject soapObjectWithNameSpace:@"http://impl.services.v3x.seeyon.com" methodName:@"authenticate"];
     soapObject.addParameter(@"userName", @"service-admin").addParameter(@"password", @"123456");
-//    soapObject.mappingClass = [NSDictionary class];
-    soapObject.mappingClass = [AuthResult class];
+    soapObject.mappingClass = [NSDictionary class];
+//    soapObject.mappingClass = [AuthResult class];
     
     MKSoapTransportManager *manager = [MKSoapTransportManager manager];
     [manager service:@"http://oa.tjtdxy.cn:8080/seeyon/services/authorityService?wsdl" soapObject:soapObject success:^(id obj) {

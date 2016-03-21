@@ -100,8 +100,8 @@ static NSSet *_baseDataType;
     MKSoapObject *soapObject = self.bodyOut;
     Class clazz = soapObject.mappingClass;
     
-    if (!clazz) {
-        clazz = [NSDictionary class];
+    if (!clazz || [clazz isSubclassOfClass:[NSDictionary class]]) {
+        clazz = [NSMutableDictionary class];
     }
     
     NSArray *childrens = self.returnValuePart.children;
@@ -128,13 +128,11 @@ static NSSet *_baseDataType;
     // 思路二：直接在解析xml的过程中 转为模型
     NSUInteger childCount = element.children.count;
     if ([clazz isSubclassOfClass:[NSDictionary class]]) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         for (NSUInteger i = 0; i < childCount; i++) {
             GDataXMLElement *child = element.children[i];
             id value = [self valueFromGDataElement:child propertyType:@"@\"NSString\""];
-            [dict setValue:value forKey:[NSString stringWithFormat:@"v%tu", i]];
+            [obj setValue:value forKey:[NSString stringWithFormat:@"v%tu", i]];
         }
-        obj = dict.copy;
         return;
     }
     
