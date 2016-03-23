@@ -11,7 +11,6 @@
 		270B39F01C9FA03E005C8573 /* PersonExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39EF1C9FA03E005C8573 /* PersonExport.m */; };
 		270B39F31C9FA048005C8573 /* NewsTypeExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39F21C9FA048005C8573 /* NewsTypeExport.m */; };
 		270B39F61C9FA051005C8573 /* TextHtmlExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39F51C9FA051005C8573 /* TextHtmlExport.m */; };
-		270B39FD1C9FBE45005C8573 /* NSObject+GDataXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39FC1C9FBE45005C8573 /* NSObject+GDataXML.m */; };
 		270B3A451C9FDC76005C8573 /* NSString+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B3A441C9FDC76005C8573 /* NSString+Convert.m */; };
 		275E1D471C9E946500AA4DFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E1D461C9E946500AA4DFE /* main.m */; };
 		275E1D4A1C9E946500AA4DFE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E1D491C9E946500AA4DFE /* AppDelegate.m */; };
@@ -35,6 +34,7 @@
 		275E1E371C9E9A7000AA4DFE /* MKXmlSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E1E2F1C9E9A7000AA4DFE /* MKXmlSerializer.m */; };
 		275E1E3A1C9E9B6A00AA4DFE /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 275E1E391C9E9B6A00AA4DFE /* libxml2.tbd */; };
 		275E1E3D1C9E9BD000AA4DFE /* AuthResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E1E3C1C9E9BD000AA4DFE /* AuthResult.m */; };
+		27F228BE1CA26574007363B5 /* NSObject+GDataXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F228BD1CA26574007363B5 /* NSObject+GDataXML.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +65,6 @@
 		270B39F51C9FA051005C8573 /* TextHtmlExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextHtmlExport.m; sourceTree = "<group>"; };
 		270B39F81C9FA2CF005C8573 /* MKSoapKeyMappingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSoapKeyMappingProtocol.h; sourceTree = "<group>"; };
 		270B39FB1C9FBE45005C8573 /* NSObject+GDataXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+GDataXML.h"; sourceTree = "<group>"; };
-		270B39FC1C9FBE45005C8573 /* NSObject+GDataXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+GDataXML.m"; sourceTree = "<group>"; };
 		270B3A431C9FDC76005C8573 /* NSString+Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Convert.h"; sourceTree = "<group>"; };
 		270B3A441C9FDC76005C8573 /* NSString+Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Convert.m"; sourceTree = "<group>"; };
 		275E1D421C9E946500AA4DFE /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +112,7 @@
 		275E1E391C9E9B6A00AA4DFE /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		275E1E3B1C9E9BD000AA4DFE /* AuthResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthResult.h; path = ../AuthResult.h; sourceTree = "<group>"; };
 		275E1E3C1C9E9BD000AA4DFE /* AuthResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthResult.m; path = ../AuthResult.m; sourceTree = "<group>"; };
+		27F228BD1CA26574007363B5 /* NSObject+GDataXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+GDataXML.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,7 +280,7 @@
 				275E1E2F1C9E9A7000AA4DFE /* MKXmlSerializer.m */,
 				275E1E301C9E9A7000AA4DFE /* MKSoap.h */,
 				270B39FB1C9FBE45005C8573 /* NSObject+GDataXML.h */,
-				270B39FC1C9FBE45005C8573 /* NSObject+GDataXML.m */,
+				27F228BD1CA26574007363B5 /* NSObject+GDataXML.m */,
 			);
 			name = MKSoap;
 			path = ../MKSoap/MKSoap;
@@ -435,7 +435,7 @@
 				275E1E331C9E9A7000AA4DFE /* MKSoapEnvelope.m in Sources */,
 				275E1E371C9E9A7000AA4DFE /* MKXmlSerializer.m in Sources */,
 				275E1D9B1C9E956300AA4DFE /* AFURLResponseSerialization.m in Sources */,
-				270B39FD1C9FBE45005C8573 /* NSObject+GDataXML.m in Sources */,
+				27F228BE1CA26574007363B5 /* NSObject+GDataXML.m in Sources */,
 				275E1D971C9E956300AA4DFE /* AFHTTPSessionManager.m in Sources */,
 				275E1E341C9E9A7000AA4DFE /* MKSoapObject.m in Sources */,
 			);

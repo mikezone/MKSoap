@@ -146,22 +146,27 @@ static NSSet *_baseDataType;
                     GDataXMLNode *valueNode = [child attributeForName:ATTR_value];
                     NSNumber *number = [valueNode.stringValue numberValue];
                     [self setValue:number forKey:mapedKey];
+                    continue;
                 } else if (type == ValueTypeString) {
                     GDataXMLElement *element = child.children.firstObject;
                     [self setValue:element.stringValue forKey:mapedKey];
+                    continue;
                 } else if (type == ValueTypeArray) {
                     // DataPojo
                     GDataXMLNode *lengthNode = [child attributeForName:ATTR_length];
                     NSUInteger length = [lengthNode.stringValue unsignedIntegerValue];
                     NSMutableArray *array = [NSMutableArray arrayWithCapacity:length];
-                    GDataXMLNode *propertyTypeNode = [element attributeForName:ATTR_type];
-                    Class clazz = NSClassFromString(propertyTypeNode.stringValue);
-                    for (NSUInteger i = 0; i < length; i++) {
-                        id obj = [[clazz alloc] init];
-                        [obj setValuesWithGDataElement:child.children[i] aClass:clazz inCDATA:YES];
-                        [array addObject:obj];
-                    }
+                    if (length) {
+                        GDataXMLNode *propertyTypeNode = [child.children[0] attributeForName:ATTR_type];
+                        Class arrayElementclazz = NSClassFromString(propertyTypeNode.stringValue);
+                        for (NSUInteger i = 0; i < length; i++) {
+                            id obj = [[arrayElementclazz alloc] init];
+                            [obj setValuesWithGDataElement:child.children[i] aClass:arrayElementclazz inCDATA:YES];
+                            [array addObject:obj];
+                        }
+                    }                    
                     [self setValue:array.copy forKey:mapedKey];
+                    continue;
                 } else if (type == ValueTypeClass){
                     if (child.childCount) {
                         GDataXMLElement *element = child.children.firstObject;
@@ -171,6 +176,7 @@ static NSSet *_baseDataType;
                         [obj setValuesWithGDataElement:child.children.firstObject aClass:clazz inCDATA:YES];
                         [self setValue:obj forKey:mapedKey];
                     }
+                    continue;
                 }
             }
         }
@@ -179,19 +185,13 @@ static NSSet *_baseDataType;
 
 + (NSString *)getMappedPropertyNameWithKey:(NSString *)key {
     if ([self respondsToSelector:NSSelectorFromString(@"mkz_mappingKeysFromPerpertyToData")]) {
-#warning 换成allKeyForObject
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         NSDictionary *mapDict = [self performSelector:NSSelectorFromString(@"mkz_mappingKeysFromPerpertyToData")];
-        __block NSString *localKey = nil;
-        if ([mapDict.allValues containsObject:key]) {
-            [mapDict.allValues enumerateObjectsUsingBlock:^(NSString*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([obj isEqualToString:key]) {
-                    localKey = mapDict.allKeys[idx];
-                    *stop = YES;
-                }
-            }];
-            return localKey;
-        } else {
-            return key;
+#pragma clang diagnostic pop
+        NSArray *localKeys = [mapDict allKeysForObject:key];
+        if (localKeys.count) {
+            return localKeys[0];
         }
     }
     return key;
