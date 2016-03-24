@@ -21,11 +21,11 @@ NSString *const ATTR_isnull = @"isnull";
 NSString *const ATTR_isnull_TRUE= @"true";
 
 /*
- valuetype 11 类型
+ valuetype 0 整型
  valuetype 1 字符串
  valuetype 3 长整型
- valuetype 0 整型
  valuetype 10 数组
+ valuetype 11 类型
  */
 typedef NS_ENUM(NSUInteger, ValueType){
     ValueTypeInt = 0,
@@ -62,12 +62,12 @@ NSString *const MKDataTypeId = @"@";
 
 @implementation NSObject (GDataXML)
 
-static NSSet *_foundationDataType;
-static NSSet *_baseDataType;
+static NSSet *_foundationDataTypeClassSet;
+static NSSet *_baseDataTypeCodeSet;
 
 + (void)load
 {
-    _foundationDataType = [NSSet setWithObjects:
+    _foundationDataTypeClassSet = [NSSet setWithObjects:
                            [NSObject class],
                            [NSURL class],
                            [NSDate class],
@@ -82,46 +82,13 @@ static NSSet *_baseDataType;
                            [NSString class],
                            [NSMutableString class], nil];
     
-    _foundationDataType = [NSSet setWithObjects:
+    _baseDataTypeCodeSet = [NSSet setWithObjects:
                            MKDataTypeChar, MKDataTypeShort, MKDataTypeInt, MKDataTypeLong, MKDataTypeLongLong,
                            MKDataTypeUnsignedChar, MKDataTypeUnsignedShort,MKDataTypeUnsignedInt, MKDataTypeUnsignedLong, MKDataTypeUnsignedLongLong,
                            MKDataTypeFloat, MKDataTypeDouble, MKDataTypeBOOL,nil];
 }
 
 - (void)setValuesWithGDataElement:(GDataXMLElement *)element aClass:(Class)aClass {
-    [self setValuesWithGDataElement:element aClass:aClass inCDATA:NO];
-}
-
-- (void)setValuesWithGDataElement:(GDataXMLElement *)element aClass:(Class)aClass inCDATA:(BOOL)inCDATA {
-    if (!inCDATA) {
-        NSUInteger childCount = element.children.count;
-        if ([aClass isSubclassOfClass:[NSDictionary class]]) {
-            for (NSUInteger i = 0; i < childCount; i++) {
-                GDataXMLElement *child = element.children[i];
-                id value = [self valueFromGDataElement:child propertyType:@"@\"NSString\""];
-                [self setValue:value forKey:[NSString stringWithFormat:@"v%tu", i]];
-            }
-            return;
-        }
-        
-        unsigned int count = 0;
-        objc_property_t *properties = class_copyPropertyList(aClass, &count);
-        for (int i = 0; i < count; i++) {
-            const char *name = property_getName(properties[i]);
-            //        printf("%s\n", name);
-            NSString *key = [NSString stringWithUTF8String:name];
-            if (i < childCount) {
-                const char *typeValue = property_copyAttributeValue(properties[i], "T");
-                //            printf("%s", attributeValue);
-                NSString *type = [NSString stringWithUTF8String:typeValue];
-                GDataXMLElement *child = element.children[i];
-                id value = [self valueFromGDataElement:child propertyType:type];
-                [self setValue:value forKey:key];
-            }
-        }
-        return;
-    }
-    
     // inCDATA
 //    NSLog(@"%@", element);
     
@@ -161,7 +128,7 @@ static NSSet *_baseDataType;
                         Class arrayElementclazz = NSClassFromString(propertyTypeNode.stringValue);
                         for (NSUInteger i = 0; i < length; i++) {
                             id obj = [[arrayElementclazz alloc] init];
-                            [obj setValuesWithGDataElement:child.children[i] aClass:arrayElementclazz inCDATA:YES];
+                            [obj setValuesWithGDataElement:child.children[i] aClass:arrayElementclazz];
                             [array addObject:obj];
                         }
                     }                    
@@ -173,7 +140,7 @@ static NSSet *_baseDataType;
                         NSString *classString = [element attributeForName:ATTR_type].stringValue;
                         Class clazz = NSClassFromString(classString);
                         id obj = [[clazz alloc] init];
-                        [obj setValuesWithGDataElement:child.children.firstObject aClass:clazz inCDATA:YES];
+                        [obj setValuesWithGDataElement:child.children.firstObject aClass:clazz];
                         [self setValue:obj forKey:mapedKey];
                     }
                     continue;
@@ -197,18 +164,133 @@ static NSSet *_baseDataType;
     return key;
 }
 
-- (id)valueFromGDataElement:(GDataXMLElement *)element propertyType:(NSString *)type{
-    NSString *valueString = element.XMLString;
-    if (valueString.length == 0) {
+@end
+
+@implementation GDataXMLNode (DataTypeConvert)
+
+- (id)valueWithPropertyClass:(Class)aClass {
+    if (aClass) {
+        NSString *typeCode = [NSString stringWithFormat:@"@\"%@\"", NSStringFromClass(aClass)];
+        return [self valueWithPropertyTypeCode:typeCode];
+    } else {
+        return nil;
+    }
+}
+
+- (id)valueWithPropertyTypeCode:(NSString *)typeCode {
+    NSString *stringValue = self.stringValue;
+    if (stringValue.length == 0) {
         return [NSNull null];
     }
-    if ([type rangeOfString:@"@"].location != NSNotFound) { // 如果是Foundation的类型统一返回字符串，需要修改(包括id类型)
-        return valueString;
+    
+    if ([typeCode rangeOfString:@"@"].location != NSNotFound) {
+        NSUInteger length = typeCode.length;
+        if (length < 3) {
+            return [NSNull null];
+        }
+        NSString *type = [typeCode substringWithRange:NSMakeRange(2, length - 3)];
+        Class clazz = NSClassFromString(type);
+        if ([_foundationDataTypeClassSet containsObject:clazz]) {
+            // 1.foundation数据类型的处理
+            if ([clazz isSubclassOfClass:[NSDictionary class]]) {
+                return [self dictionaryValue];
+            } else if ([clazz isSubclassOfClass:[NSArray class]]) {
+                return [self arrayValue];
+            } else if ([clazz isSubclassOfClass:[NSSet class]]) {
+                return [self setValue];
+            } else if ([clazz isSubclassOfClass:[NSNumber class]]) {
+                return [self numberValue];
+            } else if ([clazz isSubclassOfClass:[NSData class]]) {
+                return [self dataValue];
+            } else if ([clazz isSubclassOfClass:[NSDate class]]) {
+                return [self dateValue];
+            } else if ([clazz isSubclassOfClass:[NSURL class]]) {
+                return [self URLValue];
+            } else if ([clazz isSubclassOfClass:[NSString class]]) {
+                return stringValue;
+            }
+        } else {
+            // 2.自定义class类型的处理
+            NSUInteger childCount = self.children.count;
+            
+            id obj = [[clazz alloc] init];
+            unsigned int count = 0;
+            objc_property_t *properties = class_copyPropertyList(clazz, &count);
+            for (int i = 0; i < count; i++) {
+                const char *name = property_getName(properties[i]);
+                NSString *key = [NSString stringWithUTF8String:name];
+                if (i < childCount) {
+                    const char *typeCodeChars = property_copyAttributeValue(properties[i], "T");
+                    NSString *typeCode = [NSString stringWithUTF8String:typeCodeChars];
+                    GDataXMLElement *child = self.children[i];
+                    id value = [child valueWithPropertyTypeCode:typeCode];
+                    [obj setValue:value forKey:key];
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            return obj;
+            
+        }
     }
-    if ([_baseDataType containsObject:type]) {
-        return [valueString numberValue];
+    
+    if ([_baseDataTypeCodeSet containsObject:typeCode]) {
+        return [stringValue numberValue];
     }
-    return [NSNull null];
+    // 3.没有找到合适的类型，返回valueString
+    return stringValue;
+}
+
+- (NSDictionary *)dictionaryValue {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    NSUInteger childCount = self.children.count;
+    for (NSUInteger i = 0; i < childCount; i++) {
+        GDataXMLElement *child = self.children[i];
+        NSString *value = [child stringValue];
+        [dictionary setValue:value ?:[NSNull null] forKey:[NSString stringWithFormat:@"v%tu", i]];
+    }
+    return dictionary.copy;
+}
+
+- (NSArray *)arrayValue {
+    NSMutableArray *array = [NSMutableArray array];
+    NSUInteger childCount = self.children.count;
+    for (NSUInteger i = 0; i < childCount; i++) {
+        GDataXMLElement *child = self.children[i];
+        NSString *value = [child stringValue];
+        [array addObject:value ?:[NSNull null]];
+    }
+    return array.copy;
+}
+
+- (NSSet *)setValue {
+    NSMutableSet *set = [NSMutableSet set];
+    NSUInteger childCount = self.children.count;
+    for (NSUInteger i = 0; i < childCount; i++) {
+        GDataXMLElement *child = self.children[i];
+        NSString *value = [child stringValue];
+        [set addObject:value ?:[NSNull null]];
+    }
+    return set.copy;
+}
+
+- (NSNumber *)numberValue {
+    return [self.stringValue numberValue] ?:@(0);
+}
+
+- (NSData *)dataValue {
+    return [self.stringValue dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSDate *)dateValue {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    return [formatter dateFromString:self.stringValue];
+}
+
+- (NSURL *)URLValue {
+    return [NSURL URLWithString:self.stringValue];
 }
 
 @end

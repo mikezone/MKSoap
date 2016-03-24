@@ -46,30 +46,20 @@ NSUInteger const QNAME_MARSHAL = 3;
 - (void)parseToSerializer:(MKXmlSerializer *)serializer {
     [super parseToSerializer:serializer]; // 获取return部分
     
-    // 这里开始将returnValuePart这个GDataXMLElement类型转为model
-    Class clazz = [self getMappingClass];
-    
+    Class mappingClass = [self getMappingClass];
+    NSLog(@"%@", self.returnValuePart);
     NSArray *childrens = self.returnValuePart.children;
     if (childrens.count > 1) {
-        NSMutableArray *array = [NSMutableArray arrayWithCapacity:childrens.count];
-        for (GDataXMLElement *element in childrens) {
-            id obj = [[clazz alloc] init];
-            [obj setValuesWithGDataElement:element aClass:clazz];
-            [array addObject:obj];
-        }
-        serializer.willReturnModel = array.copy;
+        id value = [self.returnValuePart valueWithPropertyClass:mappingClass?:[NSDictionary class]];
+        serializer.willReturnModel = value?:[NSNull null];
     } else if (childrens.count == 1) {
-        if (clazz) {
-            GDataXMLElement *element = childrens.firstObject;
-            if ([element.name isEqualToString:@"text"]) { // CDATA
-                [self parseCDATAString:element.stringValue toSerializer:serializer];
-                return;
-            }            
-            id obj = [[clazz alloc] init];
-            [obj setValuesWithGDataElement:childrens.firstObject aClass:clazz];
-            serializer.willReturnModel = obj;
+        GDataXMLElement *element = childrens.firstObject;
+        if (mappingClass && [element.name isEqualToString:@"text"]) { // CDATA
+            [self parseCDATAString:element.stringValue toSerializer:serializer];
+            return;
         } else {
-            serializer.willReturnModel = self.returnValuePart.stringValue;
+            id value = [self.returnValuePart valueWithPropertyClass:mappingClass?:[NSDictionary class]];
+            serializer.willReturnModel = value?:[NSNull null];
         }
         
     }
@@ -84,7 +74,7 @@ NSUInteger const QNAME_MARSHAL = 3;
         GDataXMLElement *element = document.rootElement.children[i];
         Class clazz = [self getMappingClass];
         id obj = [[clazz alloc] init];
-        [obj setValuesWithGDataElement:element aClass:clazz inCDATA:YES];
+        [obj setValuesWithGDataElement:element aClass:clazz];
         [array addObject:obj];
     }
     serializer.willReturnModel = array.copy;
@@ -93,11 +83,6 @@ NSUInteger const QNAME_MARSHAL = 3;
 - (Class)getMappingClass {
     MKSoapObject *soapObject = self.bodyOut;
     Class clazz = soapObject.mappingClass;
-//    NSLog(@"%@", NSStringFromClass(clazz));
-//    if (!clazz || [clazz isSubclassOfClass:[NSDictionary class]]) {
-    if ([clazz isSubclassOfClass:[NSDictionary class]]) {
-        clazz = [NSMutableDictionary class];
-    }
     return clazz;
 }
 

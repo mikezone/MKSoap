@@ -27,7 +27,7 @@ FOUNDATION_EXPORT NSString *const XSI1999;
 
 @property (nonatomic, strong) id bodyIn; // NSData
 @property (nonatomic, strong) id bodyOut; // MKSoapObject
-@property (nonatomic, copy) GDataXMLElement *returnValuePart; // NSString
+@property (nonatomic, copy) GDataXMLElement *returnValuePart;
 @property (nonatomic, strong) NSArray *headerIn;
 @property (nonatomic, strong) NSArray *headerOut;
 @property (nonatomic, copy) NSString *encodingStyle;

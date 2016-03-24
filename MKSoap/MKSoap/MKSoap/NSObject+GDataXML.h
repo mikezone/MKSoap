@@ -7,12 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GDataXMLNode.h"
 
 @class GDataXMLElement;
 
 @interface NSObject (GDataXML)
 
 - (void)setValuesWithGDataElement:(GDataXMLElement *)element aClass:(Class)aClass;
-- (void)setValuesWithGDataElement:(GDataXMLElement *)element aClass:(Class)aClass inCDATA:(BOOL)inCDATA;
+
+@end
+
+
+@interface GDataXMLNode (DataTypeConvert)
+
+- (id)valueWithPropertyClass:(Class)aClass;
+- (id)valueWithPropertyTypeCode:(NSString *)typeCode;
+
+- (NSDictionary *)dictionaryValue;
+- (NSArray *)arrayValue;
+- (NSSet *)setValue;
+- (NSNumber *)numberValue;
+- (NSData *)dataValue;
+- (NSDate *)dateValue;
+- (NSURL *)URLValue;
 
 @end
