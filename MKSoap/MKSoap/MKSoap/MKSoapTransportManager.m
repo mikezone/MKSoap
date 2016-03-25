@@ -59,9 +59,13 @@
     [self dataTaskWithHTTPMethod:@"POST" URLString:serviceURLString soapString:soapMsg success:^(NSURLSessionDataTask *dataTask, id responseObject) {
         if (success) {
             // 先交给envelope解析出结果， 再进行成功的回调
-            soapSerializationEnvelope.bodyIn = responseObject;
-            [soapSerializationEnvelope parseToSerializer:xmlSerializer];
-            success(xmlSerializer.willReturnModel);
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                soapSerializationEnvelope.bodyIn = responseObject;
+                [soapSerializationEnvelope parseToSerializer:xmlSerializer];
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    success(xmlSerializer.willReturnModel);
+                });
+            });
         }
     } failure:^(NSURLSessionDataTask *dataTask, NSError *error) {
         if (failure) {
@@ -109,4 +113,5 @@
     
     return dataTask;
 }
+
 @end

@@ -47,7 +47,6 @@ NSUInteger const QNAME_MARSHAL = 3;
     [super parseToSerializer:serializer]; // 获取return部分
     
     Class mappingClass = [self getMappingClass];
-    NSLog(@"%@", self.returnValuePart);
     NSArray *childrens = self.returnValuePart.children;
     if (childrens.count > 1) {
         id value = [self.returnValuePart valueWithPropertyClass:mappingClass?:[NSDictionary class]];
@@ -85,55 +84,6 @@ NSUInteger const QNAME_MARSHAL = 3;
     Class clazz = soapObject.mappingClass;
     return clazz;
 }
-
-//- (void)setValuesWithGDataElement:(GDataXMLElement *)element forObject:(id)obj aClass:(Class)aClass {
-//    Class clazz = [self getMappingClass];
-//    // 思路一：先将xml转为字典或者数组 再转为模型
-//    
-//    // 思路二：直接在解析xml的过程中 转为模型
-//    NSUInteger childCount = element.children.count;
-//    if ([clazz isSubclassOfClass:[NSDictionary class]]) {
-//        for (NSUInteger i = 0; i < childCount; i++) {
-//            GDataXMLElement *child = element.children[i];
-//            id value = [self valueFromGDataElement:child propertyType:@"@\"NSString\""];
-//            [obj setValue:value forKey:[NSString stringWithFormat:@"v%tu", i]];
-//        }
-//        return;
-//    }
-//    
-//    unsigned int count = 0;
-//    objc_property_t *properties = class_copyPropertyList(clazz, &count);
-//    for (int i = 0; i < count; i++) {
-//        const char *name = property_getName(properties[i]);
-////        printf("%s\n", name);
-//        NSString *key = [NSString stringWithUTF8String:name];
-//        if (i < childCount) {
-//            const char *typeValue = property_copyAttributeValue(properties[i], "T");
-////            printf("%s", attributeValue);
-//            NSString *type = [NSString stringWithUTF8String:typeValue];
-//            GDataXMLElement *child = element.children[i];
-//            id value = [self valueFromGDataElement:child propertyType:type];
-//            [obj setValue:value forKey:key];
-//        }
-//    }
-//    return;
-//}
-
-//- (id)valueFromGDataElement:(GDataXMLElement *)element propertyType:(NSString *)type{
-//    NSString *valueString = element.XMLString;
-//    if (valueString.length == 0) {
-//        return [NSNull null];
-//    }
-//    if ([type rangeOfString:@"@"].location != NSNotFound) { // 如果是Foundation的类型统一返回字符串，需要修改(包括id类型)
-//        return valueString;
-//    }
-//    if ([_baseDataType containsObject:type]) {
-//        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-//        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-//        return [formatter numberFromString:valueString];
-//    }
-//    return [NSNull null];
-//}
 
 //- (void)parseBody {
 //    
