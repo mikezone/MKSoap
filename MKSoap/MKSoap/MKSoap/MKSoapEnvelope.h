@@ -25,7 +25,7 @@ FOUNDATION_EXPORT NSString *const XSI1999;
 
 @interface MKSoapEnvelope : NSObject
 
-@property (nonatomic, strong) id bodyIn; // NSData
+@property (nonatomic, strong) id bodyIn; // NSMutableDictionary/NSString/Model
 @property (nonatomic, strong) id bodyOut; // MKSoapObject
 @property (nonatomic, copy) GDataXMLElement *returnValuePart;
 @property (nonatomic, strong) NSArray *headerIn;
@@ -43,9 +43,9 @@ FOUNDATION_EXPORT NSString *const XSI1999;
 @property (nonatomic, copy) NSString *xsd;
 
 - (instancetype)initWithSoapVersion:(NSUInteger)soapVersion;
-- (void)parseToSerializer:(MKXmlSerializer *)xmlSerializer;
-- (void)parseHeaderToSerializer:(MKXmlSerializer *)xmlSerializer;
-- (void)parseBodyToSerializer:(MKXmlSerializer *)xmlSerializer;
+- (void)parseFromSerializer:(MKXmlSerializer *)xmlSerializer;
+- (void)parseHeaderFromSerializer:(MKXmlSerializer *)xmlSerializer;
+- (void)parseBodyFromSerializer:(MKXmlSerializer *)xmlSerializer;
 - (void)writeToSerializer:(MKXmlSerializer *)xmlSerializer;
 - (void)writeHeaderToSerializer:(MKXmlSerializer *)xmlSerializer;
 - (void)writeBodyToSerializer:(MKXmlSerializer *)xmlSerializer;

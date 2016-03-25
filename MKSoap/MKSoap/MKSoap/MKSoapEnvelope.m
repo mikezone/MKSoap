@@ -51,11 +51,10 @@ NSString *const XSI1999 = @"http://www.w3.org/1999/XMLSchema-instance";
     return self;
 }
 
-- (void)parseToSerializer:(MKXmlSerializer *)parser {
+- (void)parseFromSerializer:(MKXmlSerializer *)xmlserializer {
     // 失败时会进入失败回调，因此这里只需解析成功的情况
     MKSoapObject *soapObject = self.bodyOut;
-//    NSLog(@"%@", [[NSString alloc] initWithData:self.bodyIn encoding:NSUTF8StringEncoding]);
-    GDataXMLDocument *doc = [[GDataXMLDocument alloc] initWithData:self.bodyIn options:0 error:nil];
+    GDataXMLDocument *doc = [[GDataXMLDocument alloc] initWithData:xmlserializer.returnedXMLStringData options:0 error:nil];
     GDataXMLElement *rootElement = [doc rootElement];
     GDataXMLNode *nameSpaceNode = [rootElement namespaces].firstObject;
     GDataXMLElement *bodyElement = [rootElement elementsForName:[NSString stringWithFormat:@"%@:Body", nameSpaceNode.name]].firstObject;
@@ -67,54 +66,50 @@ NSString *const XSI1999 = @"http://www.w3.org/1999/XMLSchema-instance";
         GDataXMLElement *returnElement = responseElement.children.firstObject;
         self.returnValuePart = returnElement;
     }
+}
+
+- (void)parseHeaderFromSerializer:(MKXmlSerializer *)xmlSerializer {
 
 }
 
-- (void)parseHeaderToSerializer:(MKXmlSerializer *)xmlSerializer {
-
-}
-
-- (void)parseBodyToSerializer:(MKXmlSerializer *)xmlSerializer {
+- (void)parseBodyFromSerializer:(MKXmlSerializer *)xmlSerializer {
 
 }
 
 - (void)writeToSerializer:(MKXmlSerializer *)xmlSerializer {
-    [xmlSerializer.willSendSoapString appendString:@"<v:Envelope"]; //
     xmlSerializer.setPrefix(@"i", self.xsi);
     xmlSerializer.setPrefix(@"d", self.xsd);
     xmlSerializer.setPrefix(@"c", self.enc);
     xmlSerializer.setPrefix(@"v", self.env);
-    [xmlSerializer.willSendSoapString appendString:@">"]; //
-//    xmlSerializer.startTag(self.env, @"Envelope");
-//    xmlSerializer.startTag(@"v", @"Envelope");
-    xmlSerializer.startTag(@"v", @"Header");
+    xmlSerializer.startTag(self.env, @"Envelope");
+    xmlSerializer.startTag(self.env, @"Header");
     [self writeHeaderToSerializer:xmlSerializer];
-//    xmlSerializer.endTag(@"v", @"Header");
-    xmlSerializer.startTag(@"v", @"Body");
+    xmlSerializer.endTag(self.env, @"Header");
+    xmlSerializer.startTag(self.env, @"Body");
     [self writeBodyToSerializer:xmlSerializer];
-    xmlSerializer.endTag(@"v", @"Body");
-    xmlSerializer.endTag(@"v", @"Envelope");
+    xmlSerializer.endTag(self.env, @"Body");
+    xmlSerializer.endTag(self.env, @"Envelope");
 }
 
 - (void)writeHeaderToSerializer:(MKXmlSerializer *)xmlSerializer {
     if (self.headerOut) {
         for (int i = 0; i < self.headerOut.count; i++) {
-            // 如何组装HeaderOut
-//            [xmlSerializer appendString:];
+            // 组装HeaderOut
         }
     }
 }
 
 - (void)writeBodyToSerializer:(MKXmlSerializer *)xmlSerializer {
-    // 将bodyOut 也就是SoapObject转为xml字符串
+    NSMutableString *string = [NSMutableString string];
     MKSoapObject *soapObject = (MKSoapObject *)self.bodyOut;
-    [xmlSerializer appendString:[NSString stringWithFormat:@"<n0:%@ xmlns:n0=\"%@\">", soapObject.methodName, soapObject.nameSpace]];
+    [string appendFormat:@"<n0:%@ xmlns:n0=\"%@\">", soapObject.methodName, soapObject.nameSpace];
     for (NSUInteger i = 0; i < soapObject.parameterCount; i++) {
         NSString *paraValue = [soapObject parameterValueAtIndex:i];
         NSString *paraKey = [soapObject parameterKeyAtIndex:i];
-        [xmlSerializer appendString:[NSString stringWithFormat:@"<%@>%@</%@>", paraKey, paraValue, paraKey]];
+        [string appendFormat:@"<%@>%@</%@>", paraKey, paraValue, paraKey];
     }
-    [xmlSerializer appendString:[NSString stringWithFormat:@"</n0:%@>", soapObject.methodName]];
+    [string appendFormat:@"</n0:%@>", soapObject.methodName];
+    [xmlSerializer appendContent:string];
 }
 
 @end

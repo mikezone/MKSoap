@@ -48,22 +48,22 @@
     MKXmlSerializer *xmlSerializer = [[MKXmlSerializer alloc] init];
     [soapSerializationEnvelope writeToSerializer:xmlSerializer];
     
-    NSString *soapMsg = xmlSerializer.willSendSoapString; // 从envelope获取soapString
-    NSString *msgLength = [NSString stringWithFormat:@"%tu", soapMsg.length];
+    NSData *soapMsgData = xmlSerializer.willSendSoapStringData.copy;
+//    NSLog(@"%@", [[NSString alloc] initWithData:soapMsgData encoding:NSUTF8StringEncoding]);
+    NSString *msgLength = [NSString stringWithFormat:@"%tu", soapMsgData.length];
     [self.afHTTPManager.requestSerializer setValue:msgLength forHTTPHeaderField:@"Content-Length"];
     if (soapObject.SOAPAction.length) {
         [self.afHTTPManager.requestSerializer setValue:soapObject.SOAPAction forHTTPHeaderField:@"SOAPAction"];
     }
-//    NSLog(@"%@", soapMsg);
     NSURLSessionDataTask *dataTask =
-    [self dataTaskWithHTTPMethod:@"POST" URLString:serviceURLString soapString:soapMsg success:^(NSURLSessionDataTask *dataTask, id responseObject) {
+    [self dataTaskWithHTTPMethod:@"POST" URLString:serviceURLString soapStringData:soapMsgData success:^(NSURLSessionDataTask *dataTask, id responseObject) {
         if (success) {
             // 先交给envelope解析出结果， 再进行成功的回调
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                soapSerializationEnvelope.bodyIn = responseObject;
-                [soapSerializationEnvelope parseToSerializer:xmlSerializer];
+                xmlSerializer.returnedXMLStringData = responseObject;
+                [soapSerializationEnvelope parseFromSerializer:xmlSerializer];
                 dispatch_sync(dispatch_get_main_queue(), ^{
-                    success(xmlSerializer.willReturnModel);
+                    success(soapSerializationEnvelope.bodyIn);
                 });
             });
         }
@@ -78,13 +78,13 @@
 
 - (NSURLSessionDataTask *)dataTaskWithHTTPMethod:(NSString *)method
                                        URLString:(NSString *)URLString
-                                      soapString:(NSString *)soapString
+                                      soapStringData:(NSData *)soapStringData
                                          success:(void (^)(NSURLSessionDataTask *, id))success
                                          failure:(void (^)(NSURLSessionDataTask *, NSError *))failure
 {
     NSError *serializationError = nil;
     NSMutableURLRequest *request = [self.afHTTPManager.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.afHTTPManager.baseURL] absoluteString] parameters:nil error:&serializationError];
-    request.HTTPBody = [soapString dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = soapStringData;
     if (serializationError) {
         if (failure) {
 #pragma clang diagnostic push

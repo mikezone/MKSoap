@@ -43,14 +43,14 @@ NSUInteger const QNAME_MARSHAL = 3;
     return self;
 }
 
-- (void)parseToSerializer:(MKXmlSerializer *)serializer {
-    [super parseToSerializer:serializer]; // 获取return部分
+- (void)parseFromSerializer:(MKXmlSerializer *)serializer {
+    [super parseFromSerializer:serializer]; // 获取return部分
     
     Class mappingClass = [self getMappingClass];
     NSArray *childrens = self.returnValuePart.children;
     if (childrens.count > 1) {
         id value = [self.returnValuePart valueWithPropertyClass:mappingClass?:[NSDictionary class]];
-        serializer.willReturnModel = value?:[NSNull null];
+        self.bodyIn = value?:[NSNull null];
     } else if (childrens.count == 1) {
         GDataXMLElement *element = childrens.firstObject;
         if (mappingClass && [element.name isEqualToString:@"text"]) { // CDATA
@@ -58,7 +58,7 @@ NSUInteger const QNAME_MARSHAL = 3;
             return;
         } else {
             id value = [self.returnValuePart valueWithPropertyClass:mappingClass?:[NSDictionary class]];
-            serializer.willReturnModel = value?:[NSNull null];
+            self.bodyIn = value?:[NSNull null];
         }
         
     }
@@ -76,7 +76,7 @@ NSUInteger const QNAME_MARSHAL = 3;
         [obj setValuesWithGDataElement:element aClass:clazz];
         [array addObject:obj];
     }
-    serializer.willReturnModel = array.copy;
+    self.bodyIn = array.copy;
 }
 
 - (Class)getMappingClass {

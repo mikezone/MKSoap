@@ -10,12 +10,13 @@
 
 @interface MKXmlSerializer : NSObject
 
-@property (nonatomic, copy) NSMutableString *willSendSoapString;
-@property (nonatomic, strong) id willReturnModel; // NSMutableDictionary/NSString/Model
+@property (nonatomic, strong) NSData *willSendSoapStringData;
+@property (nonatomic, strong) NSData *returnedXMLStringData;
 
 - (MKXmlSerializer *(^)(NSString *prefix, NSString *url))setPrefix;
 - (MKXmlSerializer *(^)(NSString *nameSpace, NSString *tagName))startTag;
 - (MKXmlSerializer *(^)(NSString *nameSpace, NSString *tagName))endTag;
 
-- (MKXmlSerializer *)appendString:(NSString *)aString;
+- (MKXmlSerializer *)appendContent:(NSString *)contentString;
+- (void)absorb:(id)obj;
 @end
