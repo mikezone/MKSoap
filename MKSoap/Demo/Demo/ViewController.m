@@ -30,6 +30,10 @@
     MKSoapObject *soapObject = [MKSoapObject soapObjectWithNameSpace:@"namespace" methodName:@"methodone"];
     soapObject.addParameter(@"1", @"v1").addParameter(@"2", @"v2").addParameter(@"3", @"v3");
     
+    // Sentence above equals to these
+    [soapObject addParameterWithKey:@"1" value:@"v1"];
+    [soapObject addParameterWithKey:@"2" value:@"v2"];
+    [soapObject addParameterWithKey:@"3" value:@"v3"];
 }
 
 - (IBAction)getTokenButtonDidClicked:(UIButton *)sender {

@@ -1,5 +1,5 @@
 # MKSoap
-easily send SOAP to server and parse response automatically
+Easily send SOAP to server and parse response automatically.
 
 ## Usage
 
