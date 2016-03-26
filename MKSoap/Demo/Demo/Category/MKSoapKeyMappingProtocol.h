@@ -11,7 +11,7 @@
 
 FOUNDATION_EXPORT NSArray *getPropertyListWithClass(Class aClass);
 
-@protocol  MKSoapKeyValueProtocol <NSObject>
+@interface NSObject (MKSoapKeyValueProtocol)
 
 + (NSDictionary *)mkz_mappingArrayPropertyElementType;
 + (NSDictionary *)mkz_mappingKeysFromPerpertyToData;
