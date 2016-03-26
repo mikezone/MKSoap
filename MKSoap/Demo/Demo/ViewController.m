@@ -26,7 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     MKSoapObject *soapObject = [MKSoapObject soapObjectWithNameSpace:@"namespace" methodName:@"methodone"];
     soapObject.addParameter(@"1", @"v1").addParameter(@"2", @"v2").addParameter(@"3", @"v3");
     
@@ -40,7 +39,7 @@
     
     MKSoapObject *soapObject = [MKSoapObject soapObjectWithNameSpace:@"http://impl.services.v3x.seeyon.com" methodName:@"authenticate"];
     soapObject.addParameter(@"userName", @"service-admin").addParameter(@"password", @"123456");
-//    soapObject.mappingClass = [NSDictionary class];
+//    soapObject.mappingClass = [NSDictionary class]; // If you won't create a mapping class, pass noting or [NSDictionary class]
     soapObject.mappingClass = [AuthResult class];
     
     MKSoapTransportManager *manager = [MKSoapTransportManager manager];
@@ -55,6 +54,9 @@
 }
 
 - (IBAction)getNewsButtonDidClicked:(UIButton *)sender {
+    if (!self.token.length) {
+        return;
+    }
     MKSoapObject *soapObject = [MKSoapObject soapObjectWithNameSpace:@"http://impl.document.services.v3x.seeyon.com" methodName:@"exportRecentNews"];
     soapObject
     .addParameter(@"token", self.token)
@@ -89,7 +91,9 @@
 }
 
 - (IBAction)getBulletinByAccountId:(UIButton *)sender {
-//    exportRecentAccountBulletinByAccountId
+    if (!self.token.length) {
+        return;
+    }
     MKSoapObject *soapObject = [MKSoapObject soapObjectWithNameSpace:@"http://impl.document.services.v3x.seeyon.com" methodName:@"exportRecentAccountBulletinByAccountId"];
     soapObject
     .addParameter(@"token", self.token)
@@ -100,13 +104,10 @@
     
     MKSoapTransportManager *manager = [MKSoapTransportManager manager];
     [manager service:@"http://oa.tjtdxy.cn:8080/seeyon/services/documentService?wsdl" soapObject:soapObject success:^(id obj) {
-//        NSLog(@"%@", [[NSString alloc] initWithData:obj encoding:NSUTF8StringEncoding]);
         NSLog(@"%@", obj);
     } failure:^(NSError *error) {
         NSLog(@"%@", [error localizedDescription]);
     }];
 }
-
-
 
 @end
