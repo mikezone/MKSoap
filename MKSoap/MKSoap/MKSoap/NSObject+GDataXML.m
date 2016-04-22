@@ -51,14 +51,21 @@ NSString *const MKDataTypeUnsignedLong = @"L";
 NSString *const MKDataTypeUnsignedLongLong = @"Q";
 
 NSString *const MKDataTypeBOOL = @"B";
-NSString *const MKDataTypePointer = @"*";
-
+NSString *const MKDataTypePointer = @"^";
+NSString *const MKDataTypeCString = @"*";
+NSString *const MKDataTypeObject = @"@";
+NSString *const MKDataTypeClass = @"#";
+NSString *const MKDataTypeSelector = @":";
 NSString *const MKDataTypeIvar = @"^{objc_ivar=}";
 NSString *const MKDataTypeMethod = @"^{objc_method=}";
 NSString *const MKDataTypeBlock = @"@?";
-NSString *const MKDataTypeClass = @"#";
-NSString *const MKDataTypeSEL = @":";
-NSString *const MKDataTypeId = @"@";
+
+NSString *const MKDataTypeCArray = @"[";
+NSString *const MKDataTypeCStruct = @"{";
+NSString *const MKDataTypeCUnion = @"(";
+
+NSString *const MKDataTypeBitfield = @"b";
+NSString *const MKDataTypeUnknown = @"?";
 
 @implementation NSObject (GDataXML)
 
