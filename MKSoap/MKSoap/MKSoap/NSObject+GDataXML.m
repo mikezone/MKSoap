@@ -25,14 +25,14 @@ NSString *const ATTR_isnull_TRUE= @"true";
  valuetype 1 字符串
  valuetype 3 长整型
  valuetype 10 数组
- valuetype 11 类型
+ valuetype 11 对象类型
  */
 typedef NS_ENUM(NSUInteger, ValueType){
     ValueTypeInt = 0,
     ValueTypeString = 1,
     ValueTypeLong = 3,
     ValueTypeArray = 10,
-    ValueTypeClass = 11
+    ValueTypeObject = 11
 };
 
 
@@ -41,6 +41,7 @@ NSString *const MKDataTypeShort = @"s";
 NSString *const MKDataTypeInt = @"i";
 NSString *const MKDataTypeLong = @"l";
 NSString *const MKDataTypeLongLong = @"q";
+
 NSString *const MKDataTypeFloat = @"f";
 NSString *const MKDataTypeDouble = @"d";
 
@@ -51,11 +52,13 @@ NSString *const MKDataTypeUnsignedLong = @"L";
 NSString *const MKDataTypeUnsignedLongLong = @"Q";
 
 NSString *const MKDataTypeBOOL = @"B";
+
 NSString *const MKDataTypePointer = @"^";
 NSString *const MKDataTypeCString = @"*";
 NSString *const MKDataTypeObject = @"@";
 NSString *const MKDataTypeClass = @"#";
 NSString *const MKDataTypeSelector = @":";
+
 NSString *const MKDataTypeIvar = @"^{objc_ivar=}";
 NSString *const MKDataTypeMethod = @"^{objc_method=}";
 NSString *const MKDataTypeBlock = @"@?";
@@ -72,22 +75,21 @@ NSString *const MKDataTypeUnknown = @"?";
 static NSSet *_foundationDataTypeClassSet;
 static NSSet *_baseDataTypeCodeSet;
 
-+ (void)load
-{
++ (void)load {
     _foundationDataTypeClassSet = [NSSet setWithObjects:
-                           [NSObject class],
-                           [NSURL class],
-                           [NSDate class],
-                           [NSNumber class],
-                           [NSDecimalNumber class],
-                           [NSData class],
-                           [NSMutableData class],
-                           [NSArray class],
-                           [NSMutableArray class],
-                           [NSDictionary class],
-                           [NSMutableDictionary class],
-                           [NSString class],
-                           [NSMutableString class], nil];
+                                   [NSObject class],
+                                   [NSURL class],
+                                   [NSDate class],
+                                   [NSNumber class],
+                                   [NSDecimalNumber class],
+                                   [NSData class],
+                                   [NSMutableData class],
+                                   [NSArray class],
+                                   [NSMutableArray class],
+                                   [NSDictionary class],
+                                   [NSMutableDictionary class],
+                                   [NSString class],
+                                   [NSMutableString class], nil];
     
     _baseDataTypeCodeSet = [NSSet setWithObjects:
                            MKDataTypeChar, MKDataTypeShort, MKDataTypeInt, MKDataTypeLong, MKDataTypeLongLong,
@@ -141,7 +143,7 @@ static NSSet *_baseDataTypeCodeSet;
                     }                    
                     [self setValue:array.copy forKey:mapedKey];
                     continue;
-                } else if (type == ValueTypeClass){
+                } else if (type == ValueTypeObject){
                     if (child.childCount) {
                         GDataXMLElement *element = child.children.firstObject;
                         NSString *classString = [element attributeForName:ATTR_type].stringValue;
@@ -241,11 +243,11 @@ static NSSet *_baseDataTypeCodeSet;
             
         }
     }
-    
+    // 3.基本数据类型
     if ([_baseDataTypeCodeSet containsObject:typeCode]) {
         return [stringValue numberValue];
     }
-    // 3.没有找到合适的类型，返回valueString
+    // 4.没有找到合适的类型，返回valueString
     return stringValue;
 }
 

@@ -148,4 +148,5 @@ NSUInteger const QNAME_MARSHAL = 3;
 //- (void)writeVectorBody {
 //
 //}
+
 @end

@@ -19,4 +19,5 @@
 
 - (MKXmlSerializer *)appendContent:(NSString *)contentString;
 - (void)absorb:(id)obj;
+
 @end

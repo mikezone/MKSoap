@@ -11,7 +11,7 @@
 		270B39F01C9FA03E005C8573 /* PersonExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39EF1C9FA03E005C8573 /* PersonExport.m */; };
 		270B39F31C9FA048005C8573 /* NewsTypeExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39F21C9FA048005C8573 /* NewsTypeExport.m */; };
 		270B39F61C9FA051005C8573 /* TextHtmlExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B39F51C9FA051005C8573 /* TextHtmlExport.m */; };
-		270B3A451C9FDC76005C8573 /* NSString+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B3A441C9FDC76005C8573 /* NSString+Convert.m */; };
+		274A206A1CC9B790007CE65E /* NSString+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 274A20691CC9B790007CE65E /* NSString+Convert.m */; };
 		275E1D471C9E946500AA4DFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E1D461C9E946500AA4DFE /* main.m */; };
 		275E1D4A1C9E946500AA4DFE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E1D491C9E946500AA4DFE /* AppDelegate.m */; };
 		275E1D521C9E946500AA4DFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 275E1D511C9E946500AA4DFE /* Assets.xcassets */; };
@@ -63,10 +63,10 @@
 		270B39F21C9FA048005C8573 /* NewsTypeExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTypeExport.m; sourceTree = "<group>"; };
 		270B39F41C9FA051005C8573 /* TextHtmlExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextHtmlExport.h; sourceTree = "<group>"; };
 		270B39F51C9FA051005C8573 /* TextHtmlExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextHtmlExport.m; sourceTree = "<group>"; };
-		270B39F81C9FA2CF005C8573 /* MKSoapKeyMappingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSoapKeyMappingProtocol.h; sourceTree = "<group>"; };
 		270B39FB1C9FBE45005C8573 /* NSObject+GDataXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+GDataXML.h"; sourceTree = "<group>"; };
-		270B3A431C9FDC76005C8573 /* NSString+Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Convert.h"; sourceTree = "<group>"; };
-		270B3A441C9FDC76005C8573 /* NSString+Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Convert.m"; sourceTree = "<group>"; };
+		274A20671CC9B790007CE65E /* MKSoapKeyMappingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSoapKeyMappingProtocol.h; sourceTree = "<group>"; };
+		274A20681CC9B790007CE65E /* NSString+Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Convert.h"; sourceTree = "<group>"; };
+		274A20691CC9B790007CE65E /* NSString+Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Convert.m"; sourceTree = "<group>"; };
 		275E1D421C9E946500AA4DFE /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		275E1D461C9E946500AA4DFE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		275E1D481C9E946500AA4DFE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -158,12 +158,12 @@
 			path = ResultModel;
 			sourceTree = "<group>";
 		};
-		270B39F71C9FA234005C8573 /* Category */ = {
+		274A20661CC9B790007CE65E /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				270B39F81C9FA2CF005C8573 /* MKSoapKeyMappingProtocol.h */,
-				270B3A431C9FDC76005C8573 /* NSString+Convert.h */,
-				270B3A441C9FDC76005C8573 /* NSString+Convert.m */,
+				274A20671CC9B790007CE65E /* MKSoapKeyMappingProtocol.h */,
+				274A20681CC9B790007CE65E /* NSString+Convert.h */,
+				274A20691CC9B790007CE65E /* NSString+Convert.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -193,7 +193,6 @@
 		275E1D441C9E946500AA4DFE /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				270B39F71C9FA234005C8573 /* Category */,
 				270B39EA1C9F9F0D005C8573 /* ResultModel */,
 				275E1D9D1C9E957E00AA4DFE /* GDataXMLNode */,
 				275E1D891C9E956300AA4DFE /* AFNetworking */,
@@ -268,6 +267,7 @@
 		275E1E321C9E9A7000AA4DFE /* MKSoap */ = {
 			isa = PBXGroup;
 			children = (
+				274A20661CC9B790007CE65E /* Category */,
 				275E1E281C9E9A7000AA4DFE /* MKSoapObject.h */,
 				275E1E291C9E9A7000AA4DFE /* MKSoapObject.m */,
 				275E1E261C9E9A7000AA4DFE /* MKSoapEnvelope.h */,
@@ -416,7 +416,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				270B3A451C9FDC76005C8573 /* NSString+Convert.m in Sources */,
 				275E1D9C1C9E956300AA4DFE /* AFURLSessionManager.m in Sources */,
 				275E1D4A1C9E946500AA4DFE /* AppDelegate.m in Sources */,
 				275E1D981C9E956300AA4DFE /* AFNetworkReachabilityManager.m in Sources */,
@@ -430,6 +429,7 @@
 				275E1D991C9E956300AA4DFE /* AFSecurityPolicy.m in Sources */,
 				275E1E3D1C9E9BD000AA4DFE /* AuthResult.m in Sources */,
 				275E1D9A1C9E956300AA4DFE /* AFURLRequestSerialization.m in Sources */,
+				274A206A1CC9B790007CE65E /* NSString+Convert.m in Sources */,
 				270B39ED1C9F9F38005C8573 /* NewsExport.m in Sources */,
 				275E1DA01C9E957E00AA4DFE /* GDataXMLNode.m in Sources */,
 				275E1E331C9E9A7000AA4DFE /* MKSoapEnvelope.m in Sources */,

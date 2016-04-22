@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
-FOUNDATION_EXPORT NSArray *getPropertyListWithClass(Class aClass);
-
 @interface NSObject (MKSoapKeyValueProtocol)
 
 + (NSDictionary *)mkz_mappingArrayPropertyElementType;
