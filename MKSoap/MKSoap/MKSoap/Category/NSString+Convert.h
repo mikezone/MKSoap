@@ -14,6 +14,4 @@
 - (NSInteger)integerValue;
 - (NSUInteger)unsignedIntegerValue;
 
-// no word
-
 @end
