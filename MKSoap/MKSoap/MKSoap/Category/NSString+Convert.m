@@ -26,6 +26,4 @@
     return [number unsignedIntegerValue];
 }
 
-// test
-
 @end
